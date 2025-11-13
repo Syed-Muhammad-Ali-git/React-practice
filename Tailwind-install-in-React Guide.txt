@@ -1,0 +1,53 @@
+Note: Tailwindcss installation in react project by vite.
+
+Select any folder and open cmd and run all this commands step by step:
+
+
+step 1: 
+
+Run for react project with vite,
+npm create vite@latest myReactProject
+
+step 2:
+
+Now Run for node modules folder,
+npm install
+
+step 3:
+
+Run for tailwindcss initialization,
+npm install tailwindcss @tailwindcss/vite
+
+step 4:
+
+import this in vite.config.js
+( import tailwindcss from '@tailwindcss/vite' )
+
+step 5:
+
+add this plugin in vite.config.js
+(  tailwindcss(), )
+
+step 6:
+
+clear all css in index.css file and import this
+( @import "tailwindcss"; )
+
+step 7:
+
+Run for run react project,
+npm run dev
+
+
+step 8:
+
+in index.html paste this h1 to check tailwind is working or not,
+
+<h1 class="text-3xl font-bold underline"> Hello world! </h1>
+
+if tailwind is working then the Hello world print in dom with bold font and bigger than h1 and underlined text.
+
+
+
+
+

@@ -1,0 +1,37 @@
+src
+  |
+  |
+  ---- assets (for images)
+  ---- components (for header footer, navbar, etc.)
+  ---- screen (for pages home, about, contact, etc.)
+  ---- utils (routes.jsx for page rendering)
+
+
+
+according to chatgpt:
+
+my-app/
+│── public/                # Static files (favicon, images, etc.)
+│── src/
+│   ├── assets/            # Images, fonts, icons
+│   ├── components/        # Reusable UI components
+│   │   ├── Button.jsx
+│   │   ├── InputField.jsx
+│   │   └── Card.jsx
+│   ├── hooks/             # Custom React hooks
+│   │   └── useFetch.js
+│   ├── pages/             # Screens / pages
+│   │   ├── Home.jsx
+│   │   ├── About.jsx
+│   │   └── Contact.jsx
+│   ├── context/           # Context API (state management)
+│   │   └── UserContext.jsx
+│   ├── utils/             # Helper functions
+│   │   └── validators.js
+│   ├── App.jsx            # Main App component
+│   ├── main.jsx           # Entry file (ReactDOM.createRoot)
+│   └── index.css          # Tailwind entry
+│
+├── package.json
+├── tailwind.config.js
+└── vite.config.js
