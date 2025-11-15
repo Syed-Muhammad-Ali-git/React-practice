@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   MDBBtn,
   MDBContainer,
@@ -8,10 +7,8 @@ import {
   MDBInput,
   MDBIcon,
 } from "mdb-react-ui-kit";
-
-import useHandleSignin from "./HandleSignin";
 import HandleForgot from "./HandleForgot.js";
-import { useAuth } from "../../context/authUtils";
+import useHandleSignin from "./HandleSignin.js";
 
 const Login_form = () => {
   const [email, setEmail] = useState("");
@@ -21,8 +18,7 @@ const Login_form = () => {
 
   const emailRef = useRef();
   const passRef = useRef();
-  const navigate = useNavigate();
-  const { register } = useAuth();
+  const { handleSignIn } = useHandleSignin();
 
   // Autofocus on email input on page load
   useEffect(() => {
@@ -38,42 +34,15 @@ const Login_form = () => {
     setShowPass((prev) => !prev);
   };
 
-  //  Register with validation
-  const handleRegister = () => {
-    if (email.trim() === "" || password.trim() === "") {
-      setMessage("Please enter both email and password");
-      return;
-    }
+  //  Login button (saves to localStorage and navigates to home)
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setMessage("Please enter a valid email address.");
-      return;
-    }
-
-    // Validate password length
-    if (password.length < 6) {
-      setMessage("Password must be at least 6 characters long.");
-      return;
-    }
-
-    const result = register(email, password);
-    setMessage(result.message);
+  const handleLoginClick = () => {
+    const result = handleSignIn(email, password);
     if (result.success) {
+      setMessage(result.message);
       setEmail("");
       setPassword("");
-      // Navigate to home after registration
-      navigate("/");
-    }
-  };
-
-  const { handleSignIn } = useHandleSignin();
-
-  //  Sign-in button
-  const handleSignInClick = () => {
-    const result = handleSignIn(email, password);
-    if (result && result.message) {
+    } else {
       setMessage(result.message);
     }
   };
@@ -139,13 +108,13 @@ const Login_form = () => {
               />
             </div>
 
-            {/* Sign-in Button & Forgot Password */}
+            {/* Login Button & Forgot Password */}
             <div className="text-center pt-1 mb-5 pb-1">
               <MDBBtn
                 className="mb-4 w-100 gradient-custom-2"
-                onClick={handleSignInClick}
+                onClick={handleLoginClick}
               >
-                Sign in
+                sign in
               </MDBBtn>
 
               <a
@@ -155,34 +124,6 @@ const Login_form = () => {
               >
                 Forgot password?
               </a>
-            </div>
-
-            {/* Register Section */}
-            <div className="d-flex flex-row flex-wrap align-items-center justify-content-center text-center pb-4 mb-4">
-              <p className="mb-2 mb-md-0">Don't have an account?</p>
-              <MDBBtn
-                outline
-                color="danger"
-                className="mx-2 my-2"
-                onClick={handleRegister}
-              >
-                Register
-              </MDBBtn>
-            </div>
-          </div>
-        </MDBCol>
-
-        {/* Right Side: Info Panel */}
-        <MDBCol md="6" className="mb-5">
-          <div className="d-flex flex-column justify-content-center gradient-custom-2 h-100 mb-4">
-            <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-              <h4 className="mb-4">We are more than just a company</h4>
-              <p className="small mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
             </div>
           </div>
         </MDBCol>

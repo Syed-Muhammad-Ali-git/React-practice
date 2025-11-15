@@ -1,47 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { AuthContext } from './authUtils';
+import React, { useState } from "react";
+import { AuthContext } from "./context";
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUser(storedUser);
-    }
-  }, []);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const login = (email, password) => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.email === email && storedUser.password === password) {
-      setUser(storedUser);
-      return { success: true };
-    }
-    return { success: false, message: 'Invalid email or password' };
-  };
-
-  const register = (email, password) => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setUser(storedUser);
-      return { success: true, message: 'Already registered, logging in' };
-    } else {
-      const newUser = { email, password };
-      localStorage.setItem('user', JSON.stringify(newUser));
-      setUser(newUser);
-      return { success: true, message: 'Registration successful' };
-    }
+    // Validation is done in the hook
+    localStorage.setItem("user", JSON.stringify({ email, password }));
+    setUser({ email, password });
+    return { success: true, message: "Login successful!" };
   };
 
   const logout = () => {
+    localStorage.removeItem("user");
     setUser(null);
-    localStorage.removeItem('user');
   };
 
-  const isAuthenticated = !!user;
-
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

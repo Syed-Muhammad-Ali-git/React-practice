@@ -1,13 +1,17 @@
 import "./App.css";
-import { BrowserRouter } from "react-router";
-import AppRoutes from "./routes/routes";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import Login from "./pages/login/login";
+import Home from "./pages/home/home";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <AppRoutes />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
       </BrowserRouter>
     </AuthProvider>
   );

@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const HandleForgot = ({ email, setPassword, setShowPass, passRef }) => {
   if (!email) {
     setShowPass(true);
@@ -9,8 +11,14 @@ const HandleForgot = ({ email, setPassword, setShowPass, passRef }) => {
   // Simulate password reset by generating a random password
   const newPassword = Math.random().toString(36).slice(-8);
   setShowPass(true);
-  setPassword(`Your new password is: ${newPassword}`);
+  setPassword(newPassword);
   passRef.current.focus();
+
+  Swal.fire({
+    title: "New Password Generated!",
+    icon: "success",
+    draggable: true,
+  });
 };
 
 export default HandleForgot;
